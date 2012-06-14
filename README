@@ -1,0 +1,12 @@
+Time keeping for working on jobs. Originally created to keep track of time working on a job where I was working remote.
+
+Current usage:
+./timekeeper
+	Start counting and display the time that has been done so far during the day. To stop counting just type done.
+./timekeeper times
+	Output all the time blocks that have been done and how much time worked each day.
+
+
+
+Future plans: Make this a simple GUI program using GTK (gtkmm).
+GUI Design will include start stop button and a clock, along with a display for times that have been done.
