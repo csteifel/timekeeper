@@ -1,16 +1,4 @@
-#include <iostream>
-#include <time.h>
-#include <thread>
-#include <string>
-#include <chrono>
-#include <iomanip> 
-#include <vector>
-#include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-
+#include "main.h"
 
 time_t lastStart;
 bool done = false;
@@ -37,6 +25,11 @@ void displayTimeDone(){
 }
 
 int main(int argc, char * argv[]){
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "job.timekeeper");
+	timekeeper::timeKeeper mainWindow;
+	return app->run(mainWindow);
+
+
 	std::string input;
 	
 	FILE * saveFile = fopen("timeinformation", "ab+");
