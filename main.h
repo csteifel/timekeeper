@@ -15,13 +15,24 @@
 
 namespace timekeeper {
 	
+	class comboColumns : public Gtk::TreeModel::ColumnRecord {
+		public:
+			comboColumns (){
+				add(id);
+				add(datestring);
+			}
+
+			Gtk::TreeModelColumn<int> id;
+			Gtk::TreeModelColumn<std::string> datestring;
+	} comboColumns;
+	
 	class timeKeeper : public Gtk::Window {
 		public:
-			timeKeeper() : started(false), startStop("Start timer"), timeLabel("00:00:00") {
-					timerLayout.add(startStop);
-					timerLayout.add(timeLabel);
-				}
+			timeKeeper();
 			~timeKeeper(){}
+
+
+			void dateChanged();			
 		private:
 			//void buttonPressed();
 			bool started;
@@ -29,7 +40,20 @@ namespace timekeeper {
 			Gtk::Label timeLabel;
 			Gtk::VBox layoutBox;
 			Gtk::HBox timerLayout;
+			Gtk::ComboBox dateDropDown;
+			Glib::RefPtr<Gtk::ListStore> comboModel;
+			//timeView displayTimes;
 	};
 
+	
 
+	/*class timeView : public Gtk::TreeView {
+		public:
+			timeView() { set }
+			~timeView() { }
+		private:
+			Gtk::ListStore timeList;
+			std::vector< std::vector<time_t> > times;
+	};
+	*/
 }

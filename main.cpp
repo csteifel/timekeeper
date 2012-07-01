@@ -1,11 +1,60 @@
 #include "main.h"
 
+
+
+
+timekeeper::timeKeeper::timeKeeper() : started(false), startStop("Start timer"), timeLabel("00:00:00") {
+	set_title("Timekeeper");
+	set_default_size(400, 300);
+
+	int count = 0;	
+
+	//Set up date drop down combo box
+	comboModel = Gtk::ListStore::create(timekeeper::comboColumns);
+	dateDropDown.set_model(comboModel);
+
+	Gtk::TreeModel::Row row;
+
+	//TODO: Create a loop to add all the items to the drop down
+	row = * (comboModel->append());
+	row[timekeeper::comboColumns.id] = count;
+	row[timekeeper::comboColumns.datestring] = "Test";
+	dateDropDown.set_active(row);
+
+
+	dateDropDown.pack_start(timekeeper::comboColumns.datestring);
+
+	//Pack the layouts and display them
+	timerLayout.add(startStop);
+	timerLayout.add(timeLabel);
+
+	layoutBox.pack_start(dateDropDown);
+	//layoutBox.add(displayTimes);
+	layoutBox.pack_start(timerLayout);
+
+	dateDropDown.show();
+	timerLayout.show();
+	startStop.show();
+	timeLabel.show();
+
+	this->add(layoutBox);
+	layoutBox.show();
+}
+
+void timekeeper::timeKeeper::dateChanged(){
+	Gtk::TreeModel::iterator active = dateDropDown.get_active();
+	std::cout << "selected " << (*active)[timekeeper::comboColumns.id] << "\n";
+}
+
+
+
 time_t lastStart;
 bool done = false;
 double dayTotal;
 int month;
 int day;
 int year; 
+
 
 void displayTimeDone(){
 	while(true){
@@ -69,6 +118,7 @@ int main(int argc, char * argv[]){
 				free(timeInfo);
 				free(timeInfo2);
 			}
+
 
 			timeInfo = (tm *) malloc(sizeof(tm));
 			timeInfo2 = (tm *) malloc(sizeof(tm));
