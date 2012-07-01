@@ -17,12 +17,17 @@ timekeeper::timeKeeper::timeKeeper() : started(false), startStop("Start timer"),
 
 	//TODO: Create a loop to add all the items to the drop down
 	row = * (comboModel->append());
-	row[timekeeper::comboColumns.id] = count;
+	row[timekeeper::comboColumns.id] = count++;
 	row[timekeeper::comboColumns.datestring] = "Test";
 	dateDropDown.set_active(row);
 
+	row = * (comboModel->append());
+	row[timekeeper::comboColumns.id] = count++;
+	row[timekeeper::comboColumns.datestring] = "Test 2";
 
 	dateDropDown.pack_start(timekeeper::comboColumns.datestring);
+	dateDropDown.signal_changed().connect(sigc::mem_fun(*this, &timekeeper::timeKeeper::dateChanged));
+
 
 	//Pack the layouts and display them
 	timerLayout.add(startStop);
